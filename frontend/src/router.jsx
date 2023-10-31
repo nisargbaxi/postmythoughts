@@ -1,8 +1,10 @@
 import Layout from "./components/misc/Layout";
 import LoginPage from "./pages/Auth/Login.page";
+import About from "./pages/About/About.page";
 import Landing from "./pages/Landing/Landing.page";
 import NotFound from "./pages/Notfound/NotFound.page";
 import CreatePostPage from "./pages/Post/CreatePost.page";
+import Register from "./pages/Register/Register.page";
 import ProtectedRoute from "./services/ProtectedRoute";
 import useBoundStore from "./store/Store";
 import {
@@ -13,6 +15,8 @@ import {
 import { PostPage, postsLoader } from "./pages/Post/Post.page";
 import { postDetailsLoader } from "./pages/Post/PostDetails.page";
 import PostDetailsPage from "./pages/Post/PostDetails.page";
+import { UserList, userListLoader } from "./pages/Users/UserList";
+import EditPostPage from "./pages/Post/EditPost.page";
 
 export const Router = () => {
   const authCheck = useBoundStore((state) => {
@@ -37,6 +41,15 @@ export const Router = () => {
     createRoutesFromElements(
       <Route element={<Layout />}>
         <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/allusers"
+          element={
+            <ProtectedRoute isAllowed={!!authCheck}>
+              <UserList />
+            </ProtectedRoute>
+          }
+          loader={userListLoader}
+        />
         <Route
           path="/posts/create"
           element={
@@ -63,7 +76,18 @@ export const Router = () => {
           }
           loader={postDetailsLoader}
         />
+        <Route
+          path="/posts/edit/:id"
+          element={
+            <ProtectedRoute isAllowed={!!authCheck}>
+              <EditPostPage />
+            </ProtectedRoute>
+          }
+          loader={postDetailsLoader}
+        />
         <Route path="/" element={<Landing />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     )

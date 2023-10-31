@@ -1,6 +1,6 @@
 .card {
-  height: var(--mantine-card-height);
-  display: flex;
+  height: rem(440px);
+  display: flex !important;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
@@ -9,16 +9,16 @@
 }
 
 .title {
-  font-family: var(--mantine-font-family);
+  font-family: Greycliff CF, var(--mantine-font-family);
   font-weight: 900;
-  color: #fff;
+  color: var(--mantine-color-white);
   line-height: 1.2;
-  font-size: 16px;
+  font-size: rem(32px);
   margin-top: var(--mantine-spacing-xs);
 }
 
 .category {
-  color: var(--mantine-white);
+  color: var(--mantine-color-white) !important;
   opacity: 0.7;
   font-weight: 700;
   text-transform: uppercase;

@@ -9,7 +9,11 @@ import {
   addPost,
   posts,
   sleep,
+  editPost,
+  createUser,
+  users,
 } from "./fakedb";
+import { userInfo } from "os";
 
 const port = 8085;
 const app = express();
@@ -30,6 +34,24 @@ app.post("/api/user/login", (req, res) => {
   }
 });
 
+app.post("/api/user/register", (req, res) => {
+  try {
+    const user = req.body;
+    console.log(user.about);
+    createUser({
+      id: 0,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      about: user.about,
+    });
+
+    res.json({ success: true });
+  } catch (error) {
+    res.status(401).json({ error });
+  }
+});
+
 app.post("/api/user/validation", (req, res) => {
   try {
     const authHeader = req.headers.authorization;
@@ -43,15 +65,36 @@ app.post("/api/user/validation", (req, res) => {
 });
 
 app.get("/api/posts", async (req, res) => {
-  // Sleep delay goes here
+  sleep(15000);
   res.json(posts);
+});
+
+app.get("/api/allusers", async (req, res) => {
+  sleep(15000);
+  res.json(users);
 });
 
 // ⭐️ TODO: Implement this yourself
 app.get("/api/posts/:id", (req, res) => {
-  const id = req.params.id;
-  // The line below should be fixed.
-  res.json(posts[0]);
+  sleep(15000);
+  try {
+    const authHeader = req.headers.authorization;
+    const token = parseToken(authHeader, res);
+    const decodedUser = jwt.verify(token, "secret");
+    const user = findUserById((decodedUser as IDecodedUser).id);
+    if (!user) {
+      throw "User not authenticated.";
+    }
+    const id = parseInt(req.params.id);
+    const post = posts.find((p) => p.id === id);
+    if (!post) {
+      res.status(401).json({ error: "Post not found." });
+    } else {
+      res.json(post);
+    }
+  } catch (error) {
+    res.status(401).json({ error });
+  }
 });
 
 /**
@@ -65,9 +108,38 @@ app.get("/api/posts/:id", (req, res) => {
  *     with an empty/incorrect payload (post)
  */
 app.post("/api/posts", (req, res) => {
-  const incomingPost = req.body;
-  addPost(incomingPost);
-  res.status(200).json({ success: true });
+  try {
+    const authHeader = req.headers.authorization;
+    const token = parseToken(authHeader, res);
+    const decodedUser = jwt.verify(token, "secret");
+    const user = findUserById((decodedUser as IDecodedUser).id);
+    if (!user) {
+      throw "User not authenticated.";
+    }
+    const incomingPost = req.body;
+    addPost({ post: incomingPost, user: user });
+    res.status(200).json({ success: true });
+  } catch (error) {
+    res.status(401).json({ error });
+  }
+});
+
+//Edit request.
+app.put("/api/posts", (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    const token = parseToken(authHeader, res);
+    const decodedUser = jwt.verify(token, "secret");
+    const user = findUserById((decodedUser as IDecodedUser).id);
+    if (!user) {
+      throw "User not authenticated.";
+    }
+    const incomingPost = req.body;
+    editPost({ post: incomingPost });
+    res.status(200).json({ success: true });
+  } catch (error) {
+    res.status(401).json({ error });
+  }
 });
 
 app.listen(port, () => console.log("Server is running"));
