@@ -1,5 +1,5 @@
 const DOMAIN = import.meta.env.VITE_ENDPOINT
   ? import.meta.env.VITE_ENDPOINT
-  : "http://localhost:8085";
+  : "https://bcit-project-backend.vercel.app";
 
 export default DOMAIN;
