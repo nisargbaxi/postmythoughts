@@ -11,6 +11,7 @@ export const users = [
     password: "123",
     name: "Nisarg Baxi",
     about: "I'm a software engineer",
+    role: "admin",
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ export const users = [
     password: "123",
     name: "Ishani Baxi",
     about: "I'm also a software engineer and proud mother !!",
+    role: "app-user",
   },
 ];
 
@@ -45,12 +47,13 @@ export const posts = [
 
 export const createUser = (user: any) => {
   user.id = users.length + 1;
+  user.role = "app-user";
   users.push(user);
 };
 
 export const addPost = (addRequest: any) => {
   addRequest.post.id = posts.length + 1;
-  addRequest.user.userId = addRequest.user.id;
+  addRequest.post.userId = addRequest.user.id;
   posts.push(addRequest.post);
 };
 
@@ -85,6 +88,6 @@ export const parseToken = (authHeader: string | undefined, res: Response) => {
   return authHeader.split(" ")[1];
 };
 
-export const sleep = (ms: number) => {
+export const sleep = (resolve: any, ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };

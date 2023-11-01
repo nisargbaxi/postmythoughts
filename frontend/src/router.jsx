@@ -15,7 +15,7 @@ import {
 import { PostPage, postsLoader } from "./pages/Post/Post.page";
 import { postDetailsLoader } from "./pages/Post/PostDetails.page";
 import PostDetailsPage from "./pages/Post/PostDetails.page";
-import { UserList, userListLoader } from "./pages/Users/UserList";
+import { UserList } from "./pages/Users/UserList";
 import EditPostPage from "./pages/Post/EditPost.page";
 
 export const Router = () => {
@@ -48,7 +48,6 @@ export const Router = () => {
               <UserList />
             </ProtectedRoute>
           }
-          loader={userListLoader}
         />
         <Route
           path="/posts/create"

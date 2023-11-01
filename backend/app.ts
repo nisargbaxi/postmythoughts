@@ -13,7 +13,8 @@ import {
   createUser,
   users,
 } from "./fakedb";
-import { userInfo } from "os";
+
+const secret = "wlSAiNvaI5EqEjJcVXkG8b8ee52_X7gbnk6q93oGGmk";
 
 const port = 8085;
 const app = express();
@@ -25,7 +26,7 @@ app.post("/api/user/login", (req, res) => {
   try {
     const { email, password } = req.body;
     const user = verifyUser(email, password);
-    const token = jwt.sign({ id: user.id }, "secret", {
+    const token = jwt.sign({ id: user.id }, secret, {
       expiresIn: "2 days",
     });
     res.json({ result: { user, token } });
@@ -56,7 +57,7 @@ app.post("/api/user/validation", (req, res) => {
   try {
     const authHeader = req.headers.authorization;
     const token = parseToken(authHeader, res);
-    const decodedUser = jwt.verify(token, "secret");
+    const decodedUser = jwt.verify(token, secret);
     const user = findUserById((decodedUser as IDecodedUser).id);
     res.json({ result: { user, token } });
   } catch (error) {
@@ -65,35 +66,34 @@ app.post("/api/user/validation", (req, res) => {
 });
 
 app.get("/api/posts", async (req, res) => {
-  sleep(15000);
-  res.json(posts);
+  sleep(res.json(posts), 5000);
 });
 
 app.get("/api/allusers", async (req, res) => {
-  sleep(15000);
-  res.json(users);
+  sleep(res.json(users), 5000);
 });
 
 // ⭐️ TODO: Implement this yourself
 app.get("/api/posts/:id", (req, res) => {
-  sleep(15000);
   try {
     const authHeader = req.headers.authorization;
     const token = parseToken(authHeader, res);
-    const decodedUser = jwt.verify(token, "secret");
+    const decodedUser = jwt.verify(token, secret);
     const user = findUserById((decodedUser as IDecodedUser).id);
     if (!user) {
       throw "User not authenticated.";
     }
     const id = parseInt(req.params.id);
     const post = posts.find((p) => p.id === id);
+    const uId = post ? post?.userId : 0;
     if (!post) {
-      res.status(401).json({ error: "Post not found." });
+      const user = users.find((u) => u.id == uId);
+      sleep(res.status(401).json({ error: "Post not found." }), 150000);
     } else {
-      res.json(post);
+      sleep(res.json({ post: post, user: user }), 5000);
     }
   } catch (error) {
-    res.status(401).json({ error });
+    sleep(res.status(401).json({ error }), 5000);
   }
 });
 
@@ -111,14 +111,14 @@ app.post("/api/posts", (req, res) => {
   try {
     const authHeader = req.headers.authorization;
     const token = parseToken(authHeader, res);
-    const decodedUser = jwt.verify(token, "secret");
+    const decodedUser = jwt.verify(token, secret);
     const user = findUserById((decodedUser as IDecodedUser).id);
     if (!user) {
       throw "User not authenticated.";
     }
     const incomingPost = req.body;
     addPost({ post: incomingPost, user: user });
-    res.status(200).json({ success: true });
+    sleep(res.status(200).json({ success: true }), 5000);
   } catch (error) {
     res.status(401).json({ error });
   }
@@ -129,14 +129,14 @@ app.put("/api/posts", (req, res) => {
   try {
     const authHeader = req.headers.authorization;
     const token = parseToken(authHeader, res);
-    const decodedUser = jwt.verify(token, "secret");
+    const decodedUser = jwt.verify(token, secret);
     const user = findUserById((decodedUser as IDecodedUser).id);
     if (!user) {
       throw "User not authenticated.";
     }
     const incomingPost = req.body;
     editPost({ post: incomingPost });
-    res.status(200).json({ success: true });
+    sleep(res.status(200).json({ success: true }), 5000);
   } catch (error) {
     res.status(401).json({ error });
   }

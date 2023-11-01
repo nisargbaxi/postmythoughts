@@ -16,13 +16,19 @@ export default () => {
         { link: "/About", label: "About", clickHandler: handleClick() },
       ]
     : [
-        { link: "/allusers", label: "All Users", clickHandler: handleClick() },
         { link: "/posts", label: "Your Thoughts", clickHandler: handleClick() },
         {
           link: "/posts/create",
           label: "Create Thoughts",
           clickHandler: handleClick(),
         },
+        user.role == "admin"
+          ? {
+              link: "/allusers",
+              label: "All Users",
+              clickHandler: handleClick(),
+            }
+          : {},
       ];
   return links;
 };
