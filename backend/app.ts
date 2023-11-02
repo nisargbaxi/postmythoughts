@@ -17,6 +17,7 @@ import {
 const secret = "wlSAiNvaI5EqEjJcVXkG8b8ee52_X7gbnk6q93oGGmk";
 
 const port = 80;
+const timeout = 1500;
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -48,7 +49,7 @@ app.post("/api/user/register", (req, res) => {
 
     res.json({ success: true });
   } catch (error) {
-    res.status(401).json({ error });
+    res.status(401).json({ error: error });
   }
 });
 
@@ -60,16 +61,16 @@ app.post("/api/user/validation", (req, res) => {
     const user = findUserById((decodedUser as IDecodedUser).id);
     res.json({ result: { user, token } });
   } catch (error) {
-    res.status(401).json({ error });
+    res.status(401).json({ error: error });
   }
 });
 
 app.get("/api/posts", async (req, res) => {
-  sleep(res.json(posts), 5000);
+  sleep(res.json(posts), timeout);
 });
 
 app.get("/api/allusers", async (req, res) => {
-  sleep(res.json(users), 5000);
+  sleep(res.json(users), timeout);
 });
 
 // ⭐️ TODO: Implement this yourself
@@ -87,12 +88,12 @@ app.get("/api/posts/:id", (req, res) => {
     const uId = post ? post?.userId : 0;
     if (!post) {
       const user = users.find((u) => u.id == uId);
-      sleep(res.status(401).json({ error: "Post not found." }), 150000);
+      sleep(res.status(401).json({ error: "Post not found." }), timeout);
     } else {
-      sleep(res.json({ post: post, user: user }), 5000);
+      sleep(res.json({ post: post, user: user }), timeout);
     }
   } catch (error) {
-    sleep(res.status(401).json({ error }), 5000);
+    sleep(res.status(401).json({ error: error }), timeout);
   }
 });
 
@@ -117,9 +118,9 @@ app.post("/api/posts", (req, res) => {
     }
     const incomingPost = req.body;
     addPost({ post: incomingPost, user: user });
-    sleep(res.status(200).json({ success: true }), 5000);
+    sleep(res.status(200).json({ success: true }), timeout);
   } catch (error) {
-    res.status(401).json({ error });
+    res.status(401).json({ error: error });
   }
 });
 
@@ -135,9 +136,9 @@ app.put("/api/posts", (req, res) => {
     }
     const incomingPost = req.body;
     editPost({ post: incomingPost });
-    sleep(res.status(200).json({ success: true }), 5000);
+    sleep(res.status(200).json({ success: true }), timeout);
   } catch (error) {
-    res.status(401).json({ error });
+    res.status(401).json({ error: error });
   }
 });
 
