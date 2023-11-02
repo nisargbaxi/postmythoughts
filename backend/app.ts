@@ -16,7 +16,7 @@ import {
 
 const secret = "wlSAiNvaI5EqEjJcVXkG8b8ee52_X7gbnk6q93oGGmk";
 
-//const port = 80;
+const port = 8080;
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -142,4 +142,4 @@ app.put("/api/posts", (req, res) => {
   }
 });
 
-app.listen(() => console.log("Server is running"));
+app.listen(port, () => console.log("Server is running"));

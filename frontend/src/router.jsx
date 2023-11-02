@@ -16,6 +16,7 @@ import { PostPage, postsLoader } from "./pages/Post/Post.page";
 import { postDetailsLoader } from "./pages/Post/PostDetails.page";
 import PostDetailsPage from "./pages/Post/PostDetails.page";
 import { UserList } from "./pages/Users/UserList";
+import { editPostPageLoader } from "./pages/Post/EditPost.page";
 import EditPostPage from "./pages/Post/EditPost.page";
 
 export const Router = () => {
@@ -82,7 +83,7 @@ export const Router = () => {
               <EditPostPage />
             </ProtectedRoute>
           }
-          loader={postDetailsLoader}
+          loader={editPostPageLoader}
         />
         <Route path="/" element={<Landing />} />
         <Route path="/about" element={<About />} />

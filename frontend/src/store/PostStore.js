@@ -1,7 +1,9 @@
-const PostStore = (set) => ({
+import DOMAIN from "../services/endpoint";
+import axios from "axios";
+
+const PostStore = (set, get) => ({
   loading: true,
-  posts: null,
-  post: null,
+  data: null,
   error: null,
   addPost: async (post) => {
     try {
@@ -59,7 +61,7 @@ const PostStore = (set) => ({
 
   getPost: async (id) => {
     try {
-      const res = await axios.get(`${DOMAIN}/api/post/${id}`);
+      const res = await axios.get(`${DOMAIN}/api/posts/${id}`);
       if (res.data) {
         set({ data: res.data, loading: false, error: null });
       } else {

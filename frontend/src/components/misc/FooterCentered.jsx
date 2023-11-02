@@ -5,7 +5,7 @@ import {
   IconBrandInstagram,
 } from "@tabler/icons-react";
 import { MantineLogo } from "@mantine/ds";
-import classes from "./FooterCEntered.module.css";
+import classes from "./FooterCentered.module.css";
 
 const links = [
   { link: "#", label: "Contact" },
