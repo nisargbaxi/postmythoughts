@@ -1,56 +1,33 @@
 import DOMAIN from "../../services/endpoint";
 import axios from "axios";
-import { useState, useEffect } from "react";
 import { ArticleCardImage } from "../../components/misc/ArticleCardImage";
 import { SimpleGrid, Container, Center } from "@mantine/core";
-import { useLoaderData } from "react-router-dom";
-import { Hourglass } from "react-loader-spinner";
+import { useAsyncValue, useLoaderData, defer } from "react-router-dom";
+import PageContent from "../../components/misc/PageContent";
 
 export const PostPage = () => {
-  const posts = useLoaderData();
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(`${DOMAIN}/api/posts`)
-      .then((response) => {
-        setTimeout(() => {
-          setData(response.data);
-          setLoading(false);
-        }, 100);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
+  const data = useLoaderData();
   return (
-    <Container>
-      {loading && (
-        <Center>
-          <Hourglass
-            visible={true}
-            height="80"
-            width="80"
-            ariaLabel="hourglass-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-            colors={["#306cce", "#72a1ed"]}
-          />
-        </Center>
-      )}
-      {!loading && (
-        <SimpleGrid cols={3}>
-          {data?.map((item) => (
-            <ArticleCardImage key={item.title} {...item} />
-          ))}
-        </SimpleGrid>
-      )}
-    </Container>
+    <PageContent promise={data.posts}>
+      <PostList />
+    </PageContent>
   );
 };
 
+function PostList() {
+  const { data } = useAsyncValue();
+  return (
+    <SimpleGrid cols={3}>
+      {data?.map((item) => (
+        <ArticleCardImage key={item.title} {...item} />
+      ))}
+    </SimpleGrid>
+  );
+}
+
 export const postsLoader = async () => {
-  return null;
+  const promise = axios.get(`${DOMAIN}/api/posts/`);
+  return defer({
+    posts: promise,
+  });
 };

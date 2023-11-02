@@ -15,9 +15,10 @@ import {
 import { PostPage, postsLoader } from "./pages/Post/Post.page";
 import { postDetailsLoader } from "./pages/Post/PostDetails.page";
 import PostDetailsPage from "./pages/Post/PostDetails.page";
-import { UserList } from "./pages/Users/UserList";
+import { UserList } from "./pages/Users/UserList.page";
 import { editPostPageLoader } from "./pages/Post/EditPost.page";
 import EditPostPage from "./pages/Post/EditPost.page";
+import { userPageLoader } from "./pages/Users/UserList.page";
 
 export const Router = () => {
   const authCheck = useBoundStore((state) => {
@@ -49,6 +50,7 @@ export const Router = () => {
               <UserList />
             </ProtectedRoute>
           }
+          loader={userPageLoader}
         />
         <Route
           path="/posts/create"

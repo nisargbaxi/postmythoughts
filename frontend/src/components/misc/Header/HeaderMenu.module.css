@@ -35,3 +35,8 @@
     color: var(--mantine-color-white);
   }
 }
+
+.drawerLink a {
+  font-size: large !important;
+  padding: 15px;
+}

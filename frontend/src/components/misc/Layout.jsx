@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { HeaderMenu } from "./Header/HeaderMenu";
 import FooterCentered from "./FooterCentered";
+import Navbar from "./Navbar";
 
 const footerStyle = {
   position: "fixed",

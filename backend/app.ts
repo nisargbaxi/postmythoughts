@@ -38,7 +38,6 @@ app.post("/api/user/login", (req, res) => {
 app.post("/api/user/register", (req, res) => {
   try {
     const user = req.body;
-    console.log(user.about);
     createUser({
       id: 0,
       name: user.name,

@@ -6,6 +6,8 @@ import {
   rem,
 } from "@mantine/core";
 import DrawerProvider from "./Contexts/drawerContext";
+import { ModalsProvider } from "@mantine/modals";
+
 const themeOverride = createTheme({
   fontFamily: "Verdana, sans-serif",
   white: "#FAFAFA",
@@ -24,7 +26,9 @@ export default ({ children }) => {
   return (
     <>
       <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
-        <DrawerProvider>{children}</DrawerProvider>
+        <ModalsProvider>
+          <DrawerProvider>{children}</DrawerProvider>
+        </ModalsProvider>
       </MantineProvider>
     </>
   );

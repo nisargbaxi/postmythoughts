@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./Navbar.module.css";
 import { MantineLogo } from "@mantine/ds";
-import { Container, Group, Burger, Drawer, Stack } from "@mantine/core";
+import { Container, Group, Burger, Drawer, Stack, Button } from "@mantine/core";
 import useLinks from "./useLinks";
 import { DrawerContext } from "../../Contexts/drawerContext";
 import { useNavigation } from "react-router-dom";

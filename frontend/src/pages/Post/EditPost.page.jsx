@@ -1,19 +1,35 @@
-import { TextInput, Button, Group, Box, VisuallyHidden } from "@mantine/core";
+import React from "react";
+import { useForm } from "@mantine/form";
+import { TextInput, Button, Group, Box } from "@mantine/core";
 import DOMAIN from "../../services/endpoint";
 import axios from "axios";
-import { useForm } from "@mantine/form";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import {
+  useNavigate,
+  useLoaderData,
+  useAsyncValue,
+  defer,
+} from "react-router-dom";
+import PageContent from "../../components/misc/PageContent";
 
 function EditPostPage() {
-  const navigate = useNavigate();
   const data = useLoaderData();
+  return (
+    <PageContent promise={data.post}>
+      <EditForm />
+    </PageContent>
+  );
+}
+
+function EditForm() {
+  const { data } = useAsyncValue();
+  const navigate = useNavigate();
   const form = useForm({
     initialValues: {
-      id: data.id,
-      title: data.title,
-      category: data.category,
-      image: data.image,
-      content: data.content,
+      id: data.post.id,
+      title: data.post.title,
+      category: data.post.category,
+      image: data.post.image,
+      content: data.post.content,
     },
   });
 
@@ -29,7 +45,7 @@ function EditPostPage() {
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput
           type="hidden"
-          value={data.id}
+          value={data.post.id}
           name="id"
           {...form.getInputProps("id")}
         />
@@ -59,6 +75,14 @@ function EditPostPage() {
 
         <Group position="right" mt="md">
           <Button type="submit">Update</Button>
+          <Button
+            variant="light"
+            onClick={() => {
+              navigate("/posts");
+            }}
+          >
+            Cancel
+          </Button>
         </Group>
       </form>
     </Box>
@@ -66,13 +90,10 @@ function EditPostPage() {
 }
 
 export const editPostPageLoader = async ({ params }) => {
-  const jwtToke = localStorage.getItem();
-  const res = await axios.head().get(`${DOMAIN}/api/posts/${params.id}`, {
-    headers: {
-      authorization: "1",
-    },
+  const promise = await axios.get(`${DOMAIN}/api/posts/${params.id}`);
+  return defer({
+    post: promise,
   });
-  return res.data;
 };
 
 export default EditPostPage;
