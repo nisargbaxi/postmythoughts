@@ -43,9 +43,6 @@ export default function Register() {
   const handleSubmit = async (values, e) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      console.log("waiting for 5 seconds before registration....");
-    }, 15000);
     const res = await axios
       .post(`${DOMAIN}/api/user/register`, values)
       .finally(() => {
@@ -81,7 +78,6 @@ export default function Register() {
 
   return (
     <Container>
-      {loading && <PageLoader />}
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Title
           order={2}
@@ -136,6 +132,7 @@ export default function Register() {
             Register
           </Button>
         </Group>
+        {loading && <PageLoader />}
       </form>
     </Container>
   );
