@@ -1,6 +1,5 @@
 import { Container, Button } from "@mantine/core";
 import { Link } from "react-router-dom";
-import { useNavigation } from "react-router-dom";
 import useBoundStore from "../../store/Store";
 
 const Landing = () => {

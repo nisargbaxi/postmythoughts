@@ -32,7 +32,7 @@ app.post("/api/user/login", (req, res) => {
     });
     res.json({ result: { user, token } });
   } catch (error) {
-    res.status(401).json({ error });
+    res.status(401).json({ error: error });
   }
 });
 

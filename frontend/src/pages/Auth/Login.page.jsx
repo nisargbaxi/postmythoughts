@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useBoundStore from "../../store/Store";
-import { Hourglass } from "react-loader-spinner";
+import PageLoader from "../../components/misc/PageLoader";
 import {
   TextInput,
   PasswordInput,
@@ -15,17 +15,37 @@ import {
   Button,
 } from "@mantine/core";
 import classes from "./Login.module.css";
+import { modals } from "@mantine/modals";
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { loginService, authLoading, user } = useBoundStore((state) => state);
-  const [emailError, setEmailError] = useState(undefined);
-  const [passwordError, setPasswordError] = useState(undefined);
+  const { loginService, authLoading, user, error } = useBoundStore(
+    (state) => state
+  );
   useEffect(() => {
     if (!!user) {
       navigate("/posts");
     }
-  }, [user]);
+    if (error) {
+      modals.open({
+        title: "Sorry, something went wrong.",
+        children: (
+          <>
+            <p style={{ color: "red" }}>Login failed, please try again.</p>
+            <Button
+              variant="default"
+              onClick={() => {
+                modals.closeAll();
+              }}
+              mt="md"
+            >
+              Close
+            </Button>
+          </>
+        ),
+      });
+    }
+  }, [user, error]);
 
   const onLogin = async (e) => {
     e.preventDefault();
@@ -44,11 +64,10 @@ function LoginPage() {
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
           <TextInput
             label="Email"
-            placeholder="you@mantine.dev"
+            placeholder="abc@xyz.com"
             required
             name="email"
             type="email"
-            error={emailError}
           />
           <PasswordInput
             label="Password"
@@ -57,27 +76,11 @@ function LoginPage() {
             mt="md"
             name="password"
             type="password"
-            error={passwordError}
           />
-          <Group justify="space-between" mt="lg">
-            <Anchor component="button" size="sm">
-              Forgot password?
-            </Anchor>
-          </Group>
           <Button type="submit" fullWidth mt="xl">
             Sign in
           </Button>
-          {authLoading && (
-            <Hourglass
-              visible={true}
-              height="80"
-              width="80"
-              ariaLabel="hourglass-loading"
-              wrapperStyle={{}}
-              wrapperClass=""
-              colors={["#306cce", "#72a1ed"]}
-            />
-          )}
+          {authLoading && <PageLoader />}
         </Paper>
       </form>
     </Container>
