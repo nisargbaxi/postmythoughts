@@ -4,9 +4,23 @@ export interface IDecodedUser {
   id: number;
 }
 
-const users = [
-  { id: 1, email: "john123@gmail.com", password: "123" },
-  { id: 2, email: "sandra123@gmail.com", password: "123" },
+export const users = [
+  {
+    id: 1,
+    email: "nisargbaxi@gmail.com",
+    password: "123",
+    name: "Nisarg Baxi",
+    about: "I'm a software engineer",
+    role: "admin",
+  },
+  {
+    id: 2,
+    email: "ishanibaxi@gmail.com",
+    password: "123",
+    name: "Ishani Baxi",
+    about: "I'm also a software engineer and proud mother !!",
+    role: "app-user",
+  },
 ];
 
 export const posts = [
@@ -31,14 +45,25 @@ export const posts = [
   },
 ];
 
-export const addPost = (post: any) => {
-  //  Issues:
-  //  *     The request body contains the title, category, and image,
-  //  *     but the addPost function needs to add a unique id
-  //  *     and the id of the currently logged in user to the post.
-  post.id = 3;
-  post.userId = 2;
-  posts.push(post);
+export const createUser = (user: any) => {
+  user.id = users.length + 1;
+  user.role = "app-user";
+  users.push(user);
+};
+
+export const addPost = (addRequest: any) => {
+  addRequest.post.id = posts.length + 1;
+  addRequest.post.userId = addRequest.user.id;
+  posts.push(addRequest.post);
+};
+
+export const editPost = (editRequest: any) => {
+  const index = posts.findIndex((p) => p.id == editRequest.post.id);
+  if (editRequest.post.title) posts[index].title = editRequest.post.title;
+  if (editRequest.post.content) posts[index].content = editRequest.post.content;
+  if (editRequest.post.image) posts[index].image = editRequest.post.image;
+  if (editRequest.post.category)
+    posts[index].category = editRequest.post.category;
 };
 
 export const verifyUser = (email: string, password: string) => {
@@ -63,6 +88,6 @@ export const parseToken = (authHeader: string | undefined, res: Response) => {
   return authHeader.split(" ")[1];
 };
 
-export const sleep = (ms: number) => {
+export const sleep = (resolve: any, ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };

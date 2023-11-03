@@ -1,10 +1,6 @@
 import useBoundStore from "../../store/Store";
-import classes from "./Navbar.module.css";
-import { useState, useEffect } from "react";
 import React from "react";
 import { DrawerContext } from "../../Contexts/drawerContext";
-import { NavLink } from "react-router-dom";
-
 export default () => {
   const { logoutService, user } = useBoundStore((state) => state);
   const { close } = React.useContext(DrawerContext);
@@ -14,25 +10,25 @@ export default () => {
     if (action) action();
   };
 
-  const items = !user
+  const links = !user
     ? [
-        <NavLink onClick={handleClick} className={classes.link} end to="/">
-          Home
-        </NavLink>,
-        <NavLink onClick={handleClick} className={classes.link} to="/login">
-          Login
-        </NavLink>,
+        { link: "/", label: "Home", clickHandler: handleClick() },
+        { link: "/About", label: "About", clickHandler: handleClick() },
       ]
     : [
-        <NavLink onClick={handleClick} className={classes.link} end to="/posts">
-          Posts
-        </NavLink>,
-        <NavLink onClick={handleClick} end to="/posts/create">
-          Create
-        </NavLink>,
-        <NavLink onClick={() => handleClick(logoutService)} to="/">
-          Logout
-        </NavLink>,
+        { link: "/posts", label: "Your Thoughts", clickHandler: handleClick() },
+        {
+          link: "/posts/create",
+          label: "Create Thoughts",
+          clickHandler: handleClick(),
+        },
+        user.role == "admin"
+          ? {
+              link: "/allusers",
+              label: "All Users",
+              clickHandler: handleClick(),
+            }
+          : {},
       ];
-  return [items];
+  return links;
 };
