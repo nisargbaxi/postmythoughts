@@ -16,7 +16,7 @@ import {
 
 const secret = "wlSAiNvaI5EqEjJcVXkG8b8ee52_X7gbnk6q93oGGmk";
 
-const port = 80;
+const port = 8080;
 const timeout = 1500;
 const app = express();
 app.use(cors());
@@ -85,12 +85,12 @@ app.get("/api/posts/:id", (req, res) => {
     }
     const id = parseInt(req.params.id);
     const post = posts.find((p) => p.id === id);
-    const uId = post ? post?.userId : 0;
+    const uId = post ? post.userId : 0;
     if (!post) {
-      const user = users.find((u) => u.id == uId);
       sleep(res.status(401).json({ error: "Post not found." }), timeout);
     } else {
-      sleep(res.json({ post: post, user: user }), timeout);
+      const author = users.find((u) => u.id == uId);
+      sleep(res.json({ post: post, user: author }), timeout);
     }
   } catch (error) {
     sleep(res.status(401).json({ error: error }), timeout);
