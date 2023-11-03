@@ -14,8 +14,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import DOMAIN from "../../services/endpoint";
 import { modals } from "@mantine/modals";
+import { useState } from "react";
+import PageLoader from "../../components/misc/PageLoader";
 
 export default function Register() {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const form = useForm({
     initialValues: {
@@ -39,15 +42,24 @@ export default function Register() {
 
   const handleSubmit = async (values, e) => {
     e.preventDefault();
-    const res = await axios.post(`${DOMAIN}/api/user/register`, values);
+    setLoading(true);
+    setTimeout(() => {
+      console.log("waiting for 5 seconds before registration....");
+    }, 15000);
+    const res = await axios
+      .post(`${DOMAIN}/api/user/register`, values)
+      .finally(() => {
+        setLoading(false);
+      });
     if (res?.data.success) {
       modals.open({
         title: "Registration successful.",
         children: (
           <>
             <p>
-              Signup successful, please check your email to confirm you account
-              and login with your credentials and spreading your thoughts...
+              Signup successful, please check your email to confirm your account
+              and login with your credentials and start spreading your
+              thoughts...
             </p>
             <Button
               fullWidth
@@ -69,6 +81,7 @@ export default function Register() {
 
   return (
     <Container>
+      {loading && <PageLoader />}
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Title
           order={2}
