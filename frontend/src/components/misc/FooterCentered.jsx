@@ -34,8 +34,6 @@ export default function FooterCentered() {
         <Group gap="xs" justify="center" wrap="nowrap">
           &copy; 2023 Nisarg Baxi, BCIT
         </Group>
-
-        <Group className={classes.links}></Group>
       </div>
     </div>
   );

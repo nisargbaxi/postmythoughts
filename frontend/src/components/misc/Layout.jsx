@@ -4,9 +4,6 @@ import FooterCentered from "./FooterCentered";
 import Navbar from "./Navbar";
 
 const footerStyle = {
-  position: "fixed",
-  left: 0,
-  bottom: 0,
   width: "100%",
   textAlign: "center",
 };
