@@ -20,10 +20,11 @@ export function ArticleCardImage({ title, category, image, id, likes }) {
           {title}
         </Title>
       </div>
-      <Button variant="white" color="dark">
-        <Link to={id.toString()}>View</Link>
-      </Button>
       <div>
+        <Button variant="white" color="dark">
+          <Link to={id.toString()}>View</Link>
+        </Button>
+
         <Text className={classes.likes} size="xs">
           <FcLike size={20} style={{ marginRight: 5, marginBottom: -5 }} />
           {likes}

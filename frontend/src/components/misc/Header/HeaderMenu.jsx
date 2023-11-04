@@ -10,7 +10,6 @@ import {
   Divider,
 } from "@mantine/core";
 import useLinks from "../useLinks";
-import { MantineLogo } from "@mantine/ds";
 import classes from "./HeaderMenu.module.css";
 import { useNavigate } from "react-router-dom";
 import useBoundStore from "../../../store/Store";
@@ -44,8 +43,8 @@ export function HeaderMenu() {
   return (
     <header className={classes.header}>
       <Container size="md" className={classes.inner}>
-        <AppLogo size={70} />
-        <Group gap={5} visibleFrom="xs">
+        <AppLogo size={60} />
+        <Group gap={5} visibleFrom="sm">
           {items}
         </Group>
         <Group visibleFrom="sm">
@@ -87,7 +86,7 @@ export function HeaderMenu() {
         <Burger
           opened={opened}
           onClick={toggleDrawer}
-          hiddenFrom="xs"
+          hiddenFrom="sm"
           size="sm"
         />
 

@@ -26,6 +26,9 @@
 
 .likes {
   color: var(--mantine-color-white) !important;
-  opacity: 1;
+  opacity: 0.85;
   font-weight: 700;
+  float: right;
+  margin-left: 12px !important;
+  margin-top: 6px !important;
 }
