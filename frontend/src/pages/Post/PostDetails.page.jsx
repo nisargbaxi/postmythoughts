@@ -39,7 +39,7 @@ function PostDetail() {
     <>
       <Group mt="md" style={{ padding: 10, margin: 10 }}>
         <Button>
-          <Link to="/posts">Back to Posts</Link>
+          <Link to="/posts">Back to Thoughts</Link>
         </Button>
         {user.id == data.post.userId && (
           <>
@@ -83,6 +83,13 @@ function PostDetail() {
                 <TableTd>
                   <Text fz="lg" c="dimmed" className={classes.label}>
                     <b>Content :</b> {data.post.content}
+                  </Text>
+                </TableTd>
+              </TableTr>
+              <TableTr>
+                <TableTd>
+                  <Text fz="lg" c="dimmed" className={classes.label}>
+                    <b>Likes :</b> {data.post.likes}
                   </Text>
                 </TableTd>
               </TableTr>

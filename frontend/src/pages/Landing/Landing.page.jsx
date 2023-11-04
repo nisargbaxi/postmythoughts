@@ -6,13 +6,18 @@ const Landing = () => {
   const { user } = useBoundStore((state) => state);
   return (
     <Container>
-      {!user && <h1>Welcome to the homepage. Anyone can see this page</h1>}
+      {!user && (
+        <h1>
+          Welcome to the PostMyThoughts. This App is for all people who wants to
+          share their thoughts.
+        </h1>
+      )}
       {user && (
         <>
           <Container>
             <h1>This is your home page to see other people's thoughts.</h1>
             <Button>
-              <Link to="/posts">Back to Posts</Link>
+              <Link to="/posts">Back to Thoughts</Link>
             </Button>
           </Container>
         </>

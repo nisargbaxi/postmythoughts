@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "@mantine/form";
-import { TextInput, Button, Group, Box } from "@mantine/core";
+import { TextInput, Button, Group, Box, Center } from "@mantine/core";
 import DOMAIN from "../../services/endpoint";
 import axios from "axios";
 import {
@@ -42,6 +42,7 @@ function EditForm() {
 
   return (
     <Box maw={300} mx="auto">
+      <Center>Edit the thought !</Center>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput
           type="hidden"

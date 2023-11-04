@@ -6,6 +6,7 @@ import {
 } from "@tabler/icons-react";
 import { MantineLogo } from "@mantine/ds";
 import classes from "./FooterCentered.module.css";
+import { AppLogo } from "./Header/AppLogo";
 
 const links = [
   { link: "#", label: "Contact" },
@@ -29,30 +30,12 @@ export default function FooterCentered() {
   return (
     <div className={classes.footer}>
       <div className={classes.inner}>
-        <MantineLogo size={28} />
-
-        <Group className={classes.links}>{items}</Group>
-
-        <Group gap="xs" justify="flex-end" wrap="nowrap">
-          <ActionIcon size="lg" variant="default" radius="xl">
-            <IconBrandTwitter
-              style={{ width: rem(18), height: rem(18) }}
-              stroke={1.5}
-            />
-          </ActionIcon>
-          <ActionIcon size="lg" variant="default" radius="xl">
-            <IconBrandYoutube
-              style={{ width: rem(18), height: rem(18) }}
-              stroke={1.5}
-            />
-          </ActionIcon>
-          <ActionIcon size="lg" variant="default" radius="xl">
-            <IconBrandInstagram
-              style={{ width: rem(18), height: rem(18) }}
-              stroke={1.5}
-            />
-          </ActionIcon>
+        <AppLogo size={40} />
+        <Group gap="xs" justify="center" wrap="nowrap">
+          &copy; 2023 Nisarg Baxi, BCIT
         </Group>
+
+        <Group className={classes.links}></Group>
       </div>
     </div>
   );

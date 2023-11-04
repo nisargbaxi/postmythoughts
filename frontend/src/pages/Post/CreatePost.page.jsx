@@ -1,4 +1,4 @@
-import { TextInput, Button, Group, Box } from "@mantine/core";
+import { TextInput, Button, Group, Box, Center } from "@mantine/core";
 import DOMAIN from "../../services/endpoint";
 import axios from "axios";
 import { useForm } from "@mantine/form";
@@ -24,6 +24,7 @@ function CreatePostPage() {
 
   return (
     <Box maw={300} mx="auto">
+      <Center>Create a thought !</Center>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput
           label="Title"

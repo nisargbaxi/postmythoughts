@@ -15,6 +15,7 @@ import classes from "./HeaderMenu.module.css";
 import { useNavigate } from "react-router-dom";
 import useBoundStore from "../../../store/Store";
 import ChangeMode from "../ColorScheme";
+import { AppLogo } from "./AppLogo";
 
 export function HeaderMenu() {
   const { logoutService, user } = useBoundStore((state) => state);
@@ -43,13 +44,7 @@ export function HeaderMenu() {
   return (
     <header className={classes.header}>
       <Container size="md" className={classes.inner}>
-        <MantineLogo
-          size={28}
-          onClick={() => {
-            navigate("/");
-          }}
-          style={{ cursor: "pointer" }}
-        />
+        <AppLogo size={70} />
         <Group gap={5} visibleFrom="xs">
           {items}
         </Group>

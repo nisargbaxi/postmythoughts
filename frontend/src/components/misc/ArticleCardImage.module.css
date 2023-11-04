@@ -23,3 +23,9 @@
   font-weight: 700;
   text-transform: uppercase;
 }
+
+.likes {
+  color: var(--mantine-color-white) !important;
+  opacity: 1;
+  font-weight: 700;
+}
