@@ -6,13 +6,18 @@ import Navbar from "./Navbar";
 const footerStyle = {
   width: "100%",
   textAlign: "center",
+  height: "50px",
+};
+
+const mainStyle = {
+  paddingTop: "50px",
 };
 
 const Layout = () => {
   return (
     <div>
       <HeaderMenu />
-      <main>
+      <main style={mainStyle}>
         <Outlet />
       </main>
       <footer style={footerStyle}>

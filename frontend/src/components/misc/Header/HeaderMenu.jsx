@@ -23,9 +23,9 @@ export function HeaderMenu() {
   const links = useLinks();
   const navigate = useNavigate();
   const [active, setActive] = useState(links[0].link);
-  const items = links.map((link) => (
+  const items = links.map((link, index) => (
     <a
-      key={link.label}
+      key={index}
       href={link.link}
       className={classes.link}
       data-active={active === link.link || undefined}

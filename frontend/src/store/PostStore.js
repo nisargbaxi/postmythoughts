@@ -5,6 +5,23 @@ const PostStore = (set, get) => ({
   loading: true,
   data: null,
   error: null,
+  likePost: async (id) => {
+    try {
+      const res = await axios.put(`${DOMAIN}/api/posts/like`, { id: id });
+      if (res.data) {
+        set({ data: res.data, loading: false, error: null });
+      } else {
+        set({
+          loading: false,
+          data: null,
+          error: "Unable to like the thought. Please try again later.",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      set({ loading: false, data: null, error: error });
+    }
+  },
   addPost: async (post) => {
     try {
       const res = await axios.post(`${DOMAIN}/api/posts`, post);

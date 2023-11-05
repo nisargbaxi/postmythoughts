@@ -57,6 +57,7 @@ export const createUser = (user: any) => {
 export const addPost = (addRequest: any) => {
   addRequest.post.id = posts.length + 1;
   addRequest.post.userId = addRequest.user.id;
+  addRequest.post.likes = 0;
   posts.push(addRequest.post);
 };
 
@@ -67,6 +68,13 @@ export const editPost = (editRequest: any) => {
   if (editRequest.post.image) posts[index].image = editRequest.post.image;
   if (editRequest.post.category)
     posts[index].category = editRequest.post.category;
+};
+
+export const likePost = (id: any) => {
+  const index = posts.findIndex((p) => p.id == id);
+  posts[index].likes = posts[index].likes + 1;
+  console.log("Like updated : " + posts[index].likes);
+  return posts[index].likes;
 };
 
 export const verifyUser = (email: string, password: string) => {

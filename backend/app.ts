@@ -12,7 +12,9 @@ import {
   editPost,
   createUser,
   users,
+  likePost,
 } from "./fakedb";
+import { error } from "console";
 
 const secret = "wlSAiNvaI5EqEjJcVXkG8b8ee52_X7gbnk6q93oGGmk";
 
@@ -73,7 +75,6 @@ app.get("/api/allusers", async (req, res) => {
   sleep(res.json(users), timeout);
 });
 
-// ⭐️ TODO: Implement this yourself
 app.get("/api/posts/:id", (req, res) => {
   try {
     const authHeader = req.headers.authorization;
@@ -98,7 +99,6 @@ app.get("/api/posts/:id", (req, res) => {
 });
 
 /**
- * Problems with this:
  * (1) Authorization Issues:
  *     What if you make a request to this route WITHOUT a token?
  *     What if you make a request to this route WITH a token but
@@ -117,6 +117,9 @@ app.post("/api/posts", (req, res) => {
       throw "User not authenticated.";
     }
     const incomingPost = req.body;
+    if (!incomingPost) {
+      throw error("Invalid request body..");
+    }
     addPost({ post: incomingPost, user: user });
     sleep(res.status(200).json({ success: true }), timeout);
   } catch (error) {
@@ -137,6 +140,29 @@ app.put("/api/posts", (req, res) => {
     const incomingPost = req.body;
     editPost({ post: incomingPost });
     sleep(res.status(200).json({ success: true }), timeout);
+  } catch (error) {
+    res.status(401).json({ error: error });
+  }
+});
+
+//Edit request.
+app.put("/api/posts/like", (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    const token = parseToken(authHeader, res);
+    const decodedUser = jwt.verify(token, secret);
+    const user = findUserById((decodedUser as IDecodedUser).id);
+    if (!user) {
+      throw error("User not authenticated.");
+    }
+    console.log("User Authenticated.");
+    const incomingPost = req.body;
+    console.log("Body content : " + incomingPost);
+    if (!incomingPost.id) {
+      throw error("Request body is not valid.");
+    }
+    const count = likePost(incomingPost.id);
+    sleep(res.status(200).json({ success: true, likes: count }), timeout);
   } catch (error) {
     res.status(401).json({ error: error });
   }

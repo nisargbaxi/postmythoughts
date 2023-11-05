@@ -1,4 +1,7 @@
 .header {
+  position: fixed;
+  z-index: 99999;
+  width: 100%;
   height: rem(56px);
   margin-bottom: rem(120px);
   background-color: var(--mantine-color-body);

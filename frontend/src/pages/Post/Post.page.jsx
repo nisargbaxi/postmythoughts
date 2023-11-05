@@ -18,8 +18,8 @@ function PostList() {
   const { data } = useAsyncValue();
   return (
     <SimpleGrid cols={3}>
-      {data?.map((item) => (
-        <ArticleCardImage key={item.title} {...item} />
+      {data?.map((item, index) => (
+        <ArticleCardImage key={index} {...item} />
       ))}
     </SimpleGrid>
   );
