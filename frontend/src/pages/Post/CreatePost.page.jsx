@@ -23,7 +23,7 @@ function CreatePostPage() {
   };
 
   return (
-    <Box maw={300} mx="auto">
+    <Box maw={300} mx="auto" mt={20}>
       <Center>Create a thought !</Center>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput

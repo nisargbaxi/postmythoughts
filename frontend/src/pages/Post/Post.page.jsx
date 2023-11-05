@@ -1,7 +1,7 @@
 import DOMAIN from "../../services/endpoint";
 import axios from "axios";
 import { ArticleCardImage } from "../../components/misc/ArticleCardImage";
-import { SimpleGrid, Container, Center } from "@mantine/core";
+import { SimpleGrid, Container, Text } from "@mantine/core";
 import { useAsyncValue, useLoaderData, defer } from "react-router-dom";
 import PageContent from "../../components/misc/PageContent";
 
@@ -17,11 +17,16 @@ export const PostPage = () => {
 function PostList() {
   const { data } = useAsyncValue();
   return (
-    <SimpleGrid cols={3}>
-      {data?.map((item, index) => (
-        <ArticleCardImage key={index} {...item} />
-      ))}
-    </SimpleGrid>
+    <Container>
+      <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+        Thoughts from other people,{" "}
+      </Text>
+      <SimpleGrid cols={3} mt={20}>
+        {data?.map((item, index) => (
+          <ArticleCardImage key={index} {...item} />
+        ))}
+      </SimpleGrid>
+    </Container>
   );
 }
 
